@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "CodeSnip – Snippet Search Companion",
-  "version": "1.2.0",
+  "version": "0.2.0",
   "description": "Associate code snippets with keywords. They appear on search results and can be saved from any code block.",
   "icons": {
     "48": "icons/icon48.png",
