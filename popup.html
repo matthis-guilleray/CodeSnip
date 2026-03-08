@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CodeSnip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M8 6L2 12L8 18" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 6L22 12L16 18" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 3L10 21" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        CodeSnip
+      </div>
+      <div class="header-actions">
+        <button class="btn-export" id="btn-export" title="Export snippets">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="7 10 12 15 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="btn-add" id="btn-add">+ New</button>
+      </div>
+    </header>
+
+    <!-- Views -->
+    <div id="view-list" class="view active">
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search snippets…" autocomplete="off" />
+      </div>
+      <div id="snippets-list" class="snippets-list">
+        <!-- Snippets rendered here -->
+      </div>
+      <div id="empty-state" class="empty-state hidden">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+          <path d="M8 6L2 12L8 18" stroke="#3b3b5a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 6L22 12L16 18" stroke="#3b3b5a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M14 3L10 21" stroke="#2a2a3d" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <p>No snippets yet.<br/>Click <strong>+ New</strong> to add one.</p>
+      </div>
+
+            <!-- Export format picker (hidden by default) -->
+      <div class="export-dropdown hidden" id="export-dropdown">
+        <button class="export-opt" id="export-json">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          Export as JSON
+        </button>
+        <button class="export-opt" id="export-md">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="9" y1="15" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Export as Markdown
+        </button>
+      </div>
+    </div>
+
+    <div id="view-form" class="view">
+      <div class="form-header">
+        <button class="btn-back" id="btn-back">← Back</button>
+        <span id="form-title">New Snippet</span>
+      </div>
+      <div class="form-body">
+        <label>Title
+          <input type="text" id="f-title" placeholder="e.g. Fetch with async/await" />
+        </label>
+        <label>Keywords <span class="hint">comma-separated</span>
+          <input type="text" id="f-keywords" placeholder="e.g. fetch, async, api call" />
+        </label>
+        <label>Language
+          <select id="f-language">
+            <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
+            <option value="python">Python</option>
+            <option value="bash">Bash / Shell</option>
+            <option value="css">CSS</option>
+            <option value="html">HTML</option>
+            <option value="rust">Rust</option>
+            <option value="go">Go</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="c">C</option>
+            <option value="sql">SQL</option>
+            <option value="json">JSON</option>
+            <option value="yaml">YAML</option>
+            <option value="text">Plain Text</option>
+          </select>
+        </label>
+        <label>Code
+          <textarea id="f-code" rows="8" placeholder="Paste your snippet here…" spellcheck="false"></textarea>
+        </label>
+        <div class="form-actions">
+          <button class="btn-cancel" id="btn-cancel">Cancel</button>
+          <button class="btn-save" id="btn-save">Save Snippet</button>
+        </div>
+        <p id="form-error" class="form-error hidden">Please fill in keywords and code.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

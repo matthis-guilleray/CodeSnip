@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "CodeSnip – Snippet Search Companion",
+  "version": "1.2.0",
+  "description": "Associate code snippets with keywords. They appear on search results and can be saved from any code block.",
+  "icons": {
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/icon48.png",
+    "default_popup": "popup.html",
+    "default_title": "CodeSnip"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "clipboardWrite",
+    "contextMenus"
+  ]
+}
